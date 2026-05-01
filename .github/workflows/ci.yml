@@ -1,0 +1,15 @@
+name: Currency CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run logic tests
+        run: |
+          python3 -c "from converter import convert_currency; assert convert_currency(1, 'USD', 'USD') == 1.0"
