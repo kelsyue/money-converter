@@ -1,3 +1,7 @@
+# Secrets and API Keys
+.env
+secret_folder/
+
+# Python cache
 __pycache__/
 *.pyc
-.DS_Store
