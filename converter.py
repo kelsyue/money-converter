@@ -1,17 +1,20 @@
-def convert_currency(amount, from_currency, to_currency):
-    """Core logic for currency conversion using a base-USD dictionary."""
-    rates = {
-        "USD": 1.0,
-        "EUR": 0.92,
-        "GBP": 0.79,
-        "JPY": 151.0
-    }
-    
-    from_currency = from_currency.upper()
-    to_currency = to_currency.upper()
+import os
+import requests
+from dotenv import load_dotenv
 
-    if from_currency not in rates or to_currency not in rates:
-        raise ValueError(f"Currency {from_currency} or {to_currency} not supported.")
-        
-    usd_amount = amount / rates[from_currency]
-    return round(usd_amount * rates[to_currency], 2)
+load_dotenv()
+
+def convert_currency(amount, from_currency, to_currency):
+    api_key = os.getenv("EXCHANGE_RATE_API_KEY")
+    url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+        if data["result"] == "success":
+            rates = data["conversion_rates"]
+            rate = rates.get(to_currency.upper())
+            return round(amount * rate, 2) if rate else None
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
