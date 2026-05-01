@@ -1,3 +1,7 @@
+import os
+import requests
+from dotenv import load_dotenv
+
 def convert_currency(amount, from_currency, to_currency):
     api_key = os.getenv("EXCHANGE_RATE_API_KEY")
 
