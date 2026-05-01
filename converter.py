@@ -8,7 +8,7 @@ def convert_currency(amount, from_currency, to_currency):
     if from_currency.upper() == to_currency.upper():
         return float(amount)
 
-    url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/{from_currency.upper()}"
+    url = f"https://api.exchangeratesapi.io/v1/latest/{from_currency.upper()}?access_key={api_key}"
 
     try:
         response = requests.get(url)
